@@ -1,0 +1,101 @@
+import pl.allegro.tech.build.axion.release.domain.hooks.HookContext
+import pl.allegro.tech.build.axion.release.domain.hooks.HooksConfig
+import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
+
+plugins {
+    kotlin("jvm") version "1.3.70"
+    id("jacoco")
+    id("pl.allegro.tech.build.axion-release") version "1.11.0"
+    id("com.github.kt3k.coveralls") version "2.10.1"
+    id("com.gradle.plugin-publish") version "0.10.1"
+    id("java-gradle-plugin")
+    id("maven-publish")
+    id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
+}
+
+repositories {
+    jcenter()
+    gradlePluginPortal()
+}
+
+ktlint {
+    version.set("0.36.0")
+    enableExperimentalRules.set(true)
+}
+
+dependencies {
+    implementation(gradleApi())
+    implementation(kotlin("stdlib-jdk8"))
+    implementation(kotlin("reflect"))
+    implementation("com.github.node-gradle:gradle-node-plugin:2.2.3")
+
+    testImplementation("org.assertj:assertj-core:3.15.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.1")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
+}
+
+scmVersion {
+    versionCreator("versionWithBranch")
+    hooks = HooksConfig().also {
+        it.pre(
+            "fileUpdate",
+            mapOf(
+                "files" to listOf("readme.md") as Any,
+                "pattern" to KotlinClosure2<String, HookContext, String>({ v, _ -> v }),
+                "replacement" to KotlinClosure2<String, HookContext, String>({ v, _ -> v })
+            )
+        )
+        it.pre("commit", KotlinClosure2<String, ScmPosition, String>({ v, _ -> "Release: $v [ci skip]" }))
+    }
+}
+
+group = "com.coditory.gradle"
+version = scmVersion.version
+
+tasks {
+    withType<Test> {
+        testLogging {
+            events("passed", "failed", "skipped")
+            setExceptionFormat("full")
+        }
+    }
+    withType<Test> {
+        useJUnitPlatform()
+    }
+    jacocoTestReport {
+        reports {
+            xml.isEnabled = true
+            html.isEnabled = true
+        }
+    }
+    coveralls {
+        sourceDirs = listOf("src/main/kotlin")
+    }
+}
+
+gradlePlugin {
+    plugins {
+        create("frontendPlugin") {
+            id = "com.coditory.frontend"
+            implementationClass = "com.coditory.gradle.frontend.FrontendPlugin"
+        }
+    }
+}
+
+// Marking new version (incrementPatch [default], incrementMinor, incrementMajor)
+// ./gradlew markNextVersion -Prelease.incrementer=incrementMinor
+// Releasing the plugin:
+// ./gradlew release && ./gradlew publishPlugins
+pluginBundle {
+    website = "https://github.com/coditory/gradle-frontend-plugin"
+    vcsUrl = "https://github.com/coditory/gradle-frontend-plugin"
+    description = "Maps gradle java project tasks to npm tasks"
+    tags = listOf("npm", "frontend")
+
+    (plugins) {
+        "frontendPlugin" {
+            displayName = "Frontend plugin"
+        }
+    }
+}
