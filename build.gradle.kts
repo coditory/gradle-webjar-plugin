@@ -39,12 +39,12 @@ scmVersion {
     versionCreator("versionWithBranch")
     hooks = HooksConfig().also {
         it.pre(
-            "fileUpdate",
-            mapOf(
-                "files" to listOf("readme.md") as Any,
-                "pattern" to KotlinClosure2<String, HookContext, String>({ v, _ -> v }),
-                "replacement" to KotlinClosure2<String, HookContext, String>({ v, _ -> v })
-            )
+                "fileUpdate",
+                mapOf(
+                        "files" to listOf("readme.md") as Any,
+                        "pattern" to KotlinClosure2<String, HookContext, String>({ v, _ -> v }),
+                        "replacement" to KotlinClosure2<String, HookContext, String>({ v, _ -> v })
+                )
         )
         it.pre("commit", KotlinClosure2<String, ScmPosition, String>({ v, _ -> "Release: $v [ci skip]" }))
     }
@@ -76,9 +76,9 @@ tasks {
 
 gradlePlugin {
     plugins {
-        create("frontendPlugin") {
-            id = "com.coditory.frontend"
-            implementationClass = "com.coditory.gradle.frontend.FrontendPlugin"
+        create("webjarPlugin") {
+            id = "com.coditory.webjar"
+            implementationClass = "com.coditory.gradle.webjar.WebjarPlugin"
         }
     }
 }
@@ -88,14 +88,14 @@ gradlePlugin {
 // Releasing the plugin:
 // ./gradlew release && ./gradlew publishPlugins
 pluginBundle {
-    website = "https://github.com/coditory/gradle-frontend-plugin"
-    vcsUrl = "https://github.com/coditory/gradle-frontend-plugin"
-    description = "Maps gradle java project tasks to npm tasks"
-    tags = listOf("npm", "frontend")
+    website = "https://github.com/coditory/gradle-webjar-plugin"
+    vcsUrl = "https://github.com/coditory/gradle-webjar-plugin"
+    description = "Creates jar with front end resources. Maps gradle java project tasks to npm tasks."
+    tags = listOf("npm", "webjar")
 
     (plugins) {
-        "frontendPlugin" {
-            displayName = "Frontend plugin"
+        "webjarPlugin" {
+            displayName = "Webjar plugin"
         }
     }
 }

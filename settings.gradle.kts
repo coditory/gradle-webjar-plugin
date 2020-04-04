@@ -1,1 +1,1 @@
-rootProject.name = "frontend-plugin"
+rootProject.name = "webjar-plugin"

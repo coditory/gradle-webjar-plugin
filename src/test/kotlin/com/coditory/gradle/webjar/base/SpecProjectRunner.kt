@@ -1,4 +1,4 @@
-package com.coditory.gradle.frontend.base
+package com.coditory.gradle.webjar.base
 
 import org.gradle.api.Project
 import org.gradle.testkit.runner.BuildResult

@@ -1,4 +1,4 @@
-package com.coditory.gradle.frontend
+package com.coditory.gradle.webjar
 
 import com.moowork.gradle.node.NodeExtension
 import com.moowork.gradle.node.NodePlugin
@@ -8,10 +8,10 @@ import org.gradle.api.plugins.JavaPlugin
 import org.gradle.api.plugins.JavaPluginConvention
 import org.gradle.api.tasks.SourceSet
 
-open class FrontendPlugin : Plugin<Project> {
+open class WebjarPlugin : Plugin<Project> {
     override fun apply(project: Project) {
         if (!project.plugins.hasPlugin(JavaPlugin::class.java)) {
-            project. plugins.apply(JavaPlugin::class.java)
+            project.plugins.apply(JavaPlugin::class.java)
         }
         setupNodePlugin(project)
         setupNpmTasks(project)
@@ -34,23 +34,24 @@ open class FrontendPlugin : Plugin<Project> {
     }
 
     private fun setupNpmTasks(project: Project) {
-        NpmBuildTask.install(project)
-        NpmCleanTask.install(project)
-        NpmInstallTask.install(project)
-        NpmLintTask.install(project)
-        NpmRemoveModulesTask.install(project)
-        NpmTestTask.install(project)
-        NpmWatchTask.install(project)
+        WebjarBuildTask.install(project)
+        WebjarCleanTask.install(project)
+        WebjarInstallTask.install(project)
+        WebjarLintTask.install(project)
+        WebjarRemoveModulesTask.install(project)
+        WebjarTestTask.install(project)
+        WebjarWatchTask.install(project)
     }
 
     companion object {
-        const val PLUGIN_ID = "com.coditory.frontend"
-        const val NPM_REMOVE_MODULES_TASK = "webjarRemoveModules"
-        const val NPM_INSTALL_TASK = "webjarInstall"
-        const val NPM_CLEAN_TASK = "webjarClean"
-        const val NPM_LINT_TASK = "webjarLint"
-        const val NPM_TEST_TASK = "webjarTest"
-        const val NPM_WATCH_TASK = "webjarWatch"
-        const val NPM_BUILD_TASK = "webjarBuild"
+        const val PLUGIN_ID = "com.coditory.webjar"
+        const val WEBJAR_TASK_GROUP = "webjar"
+        const val WEBJAR_REMOVE_MODULES_TASK = "webjarRemoveModules"
+        const val WEBJAR_INSTALL_TASK = "webjarInstall"
+        const val WEBJAR_CLEAN_TASK = "webjarClean"
+        const val WEBJAR_LINT_TASK = "webjarLint"
+        const val WEBJAR_TEST_TASK = "webjarTest"
+        const val WEBJAR_WATCH_TASK = "webjarWatch"
+        const val WEBJAR_BUILD_TASK = "webjarBuild"
     }
 }

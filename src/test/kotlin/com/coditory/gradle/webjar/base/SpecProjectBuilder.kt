@@ -1,6 +1,7 @@
-package com.coditory.gradle.frontend.base
+package com.coditory.gradle.webjar.base
 
-import com.coditory.gradle.frontend.FrontendPlugin
+import com.coditory.gradle.webjar.WebjarPlugin
+import com.coditory.gradle.webjar.base.PackageJson.Companion.packageJson
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
@@ -25,6 +26,18 @@ class SpecProjectBuilder private constructor(projectDir: File, name: String) {
         return this
     }
 
+    fun withSkipWebjarFlag(): SpecProjectBuilder {
+        project.extensions.extraProperties.set("skipWebjar", "true")
+        return this
+    }
+
+    fun withSamplePackageJson(): SpecProjectBuilder {
+        packageJson(project)
+            .withLoggingScripts()
+            .writeFile()
+        return this
+    }
+
     fun withPlugins(vararg plugins: KClass<out Plugin<*>>): SpecProjectBuilder {
         plugins
             .toList()
@@ -38,11 +51,21 @@ class SpecProjectBuilder private constructor(projectDir: File, name: String) {
         return this
     }
 
-    fun withFile(path: String, content: String): SpecProjectBuilder {
+    fun withFile(path: String, content: String = ""): SpecProjectBuilder {
         val filePath = project.rootDir.resolve(path).toPath()
         Files.createDirectories(filePath.parent)
         val testFile = Files.createFile(filePath).toFile()
         testFile.writeText(content.trimIndent().trim())
+        return this
+    }
+
+    fun withFiles(vararg path: String): SpecProjectBuilder {
+        path.forEach { withFile(it) }
+        return this
+    }
+
+    fun withFiles(paths: List<String>): SpecProjectBuilder {
+        paths.forEach { withFile(it) }
         return this
     }
 
@@ -59,7 +82,7 @@ class SpecProjectBuilder private constructor(projectDir: File, name: String) {
 
         fun projectWithPlugins(name: String = "sample-project"): SpecProjectBuilder {
             return project(name)
-                .withPlugins(JavaPlugin::class, FrontendPlugin::class)
+                .withPlugins(JavaPlugin::class, WebjarPlugin::class)
         }
 
         fun removeProjectDirs() {

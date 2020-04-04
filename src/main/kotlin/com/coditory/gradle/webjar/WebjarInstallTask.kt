@@ -1,20 +1,22 @@
-package com.coditory.gradle.frontend
+package com.coditory.gradle.webjar
 
-import com.coditory.gradle.frontend.FrontendPlugin.Companion.NPM_INSTALL_TASK
-import com.coditory.gradle.frontend.FrontendPlugin.Companion.NPM_REMOVE_MODULES_TASK
-import com.coditory.gradle.frontend.ProjectFiles.filterExistingFiles
-import com.coditory.gradle.frontend.VersionFiles.nodeVersionFile
-import com.coditory.gradle.frontend.VersionFiles.npmVersionFile
+import com.coditory.gradle.webjar.ProjectFiles.filterExistingFiles
+import com.coditory.gradle.webjar.VersionFiles.nodeVersionFile
+import com.coditory.gradle.webjar.VersionFiles.npmVersionFile
+import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
+import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
+import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.moowork.gradle.node.NodeExtension
 import com.moowork.gradle.node.npm.NpmTask
 import com.moowork.gradle.node.task.SetupTask
 import org.gradle.api.Project
-import org.gradle.api.plugins.BasePlugin.BUILD_GROUP
 
-internal object NpmInstallTask {
+internal object WebjarInstallTask {
     fun install(project: Project) {
-        project.tasks.create(NPM_INSTALL_TASK, NpmTask::class.java) { task ->
-            task.group = BUILD_GROUP
+        project.tasks.create(WEBJAR_INSTALL_TASK, NpmTask::class.java) { task ->
+            task.dependsOn(SetupTask.NAME)
+            task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
+            task.group = WEBJAR_TASK_GROUP
             filterExistingFiles(project, "package.json", "package-lock.json").forEach {
                 task.inputs.files(it)
             }
@@ -22,8 +24,6 @@ internal object NpmInstallTask {
             task.setArgs(listOf("install"))
             task.doFirst { ensurePackageJson(project) }
             task.doLast { writeVersionFiles(project) }
-            task.dependsOn(SetupTask.NAME)
-            task.dependsOn(NPM_REMOVE_MODULES_TASK)
         }
     }
 

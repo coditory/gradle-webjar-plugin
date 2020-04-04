@@ -1,4 +1,4 @@
-package com.coditory.gradle.frontend
+package com.coditory.gradle.webjar
 
 import org.gradle.api.Project
 
