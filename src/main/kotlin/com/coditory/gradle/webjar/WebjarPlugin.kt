@@ -34,6 +34,7 @@ open class WebjarPlugin : Plugin<Project> {
     }
 
     private fun setupNpmTasks(project: Project) {
+        WebjarInitTask.install(project)
         WebjarBuildTask.install(project)
         WebjarCleanTask.install(project)
         WebjarInstallTask.install(project)
@@ -47,6 +48,7 @@ open class WebjarPlugin : Plugin<Project> {
         const val PLUGIN_ID = "com.coditory.webjar"
         const val WEBJAR_TASK_GROUP = "webjar"
         const val WEBJAR_REMOVE_MODULES_TASK = "webjarRemoveModules"
+        const val WEBJAR_INIT_TASK = "webjarInit"
         const val WEBJAR_INSTALL_TASK = "webjarInstall"
         const val WEBJAR_CLEAN_TASK = "webjarClean"
         const val WEBJAR_LINT_TASK = "webjarLint"

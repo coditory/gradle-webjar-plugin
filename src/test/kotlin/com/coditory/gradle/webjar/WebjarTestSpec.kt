@@ -23,6 +23,11 @@ class WebjarTestSpec {
         assertThat(testTask.group).isEqualTo(WEBJAR_TASK_GROUP)
         assertThat(testTask.args).isEqualTo(listOf("run", "test"))
         assertThat(testTask.outputs.files).contains(project.buildDir.resolve("test"))
+        assertThat(testTask.inputs.files).contains(
+            project.projectDir.resolve(".babelrc"),
+            project.projectDir.resolve("package.json"),
+            project.projectDir.resolve("package-lock.json")
+        )
         assertThat(testTask.dependsOn).contains(
             WEBJAR_INSTALL_TASK,
             NpmSetupTask.NAME
@@ -31,7 +36,7 @@ class WebjarTestSpec {
 
     @Test
     fun `should dynamically add additional files to task inputs`() {
-        val inputFiles = listOf("src/index.js", "tests/index.js", ".babelrc", "package.json", "package-lock.json")
+        val inputFiles = listOf("src/index.js", "tests/index.js")
         val project = project()
             .withFiles(inputFiles)
             .withPlugins(WebjarPlugin::class)

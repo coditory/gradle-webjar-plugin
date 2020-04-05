@@ -1,4 +1,4 @@
-package com.coditory.gradle.webjar
+package com.coditory.gradle.webjar.shared
 
 import org.gradle.api.Project
 

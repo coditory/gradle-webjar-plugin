@@ -1,8 +1,8 @@
 package com.coditory.gradle.webjar
 
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingDirs
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingFiles
-import com.coditory.gradle.webjar.TimeMarkers.createTimeMarkerFile
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingDirs
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingFiles
+import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_LINT_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
@@ -19,9 +19,7 @@ internal object WebjarLintTask {
             filterExistingDirs(project, "src").forEach {
                 task.inputs.dir(it)
             }
-            filterExistingFiles(project, ".eslintrc", ".eslintignore", ".tslint", ".tslintignore").forEach {
-                task.inputs.files(it)
-            }
+            task.inputs.files(".eslintrc", ".eslintignore", ".tslint", ".tslintignore")
             task.outputs.dir(project.buildDir.resolve("lint"))
             task.setArgs(listOf("run", "lint"))
             task.doLast { createTimeMarkerFile(project, "lint/timestamp") }

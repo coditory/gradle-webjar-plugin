@@ -1,8 +1,8 @@
 package com.coditory.gradle.webjar
 
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingDirs
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingFiles
-import com.coditory.gradle.webjar.TimeMarkers.createTimeMarkerFile
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingDirs
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingFiles
+import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TEST_TASK
@@ -18,9 +18,7 @@ object WebjarTestTask {
             filterExistingDirs(project, "src", "tests").forEach {
                 task.inputs.dir(it)
             }
-            filterExistingFiles(project, ".babelrc", "package.json", "package-lock.json").forEach {
-                task.inputs.files(it)
-            }
+            task.inputs.files(".babelrc", "package.json", "package-lock.json")
             task.outputs.dir(project.buildDir.resolve("test"))
             task.setArgs(listOf("run", "test"))
             task.doLast { createTimeMarkerFile(project, "test/timestamp") }

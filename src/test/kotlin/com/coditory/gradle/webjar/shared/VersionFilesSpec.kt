@@ -1,7 +1,7 @@
-package com.coditory.gradle.webjar
+package com.coditory.gradle.webjar.shared
 
-import com.coditory.gradle.webjar.VersionFiles.nodeVersionFile
-import com.coditory.gradle.webjar.VersionFiles.npmVersionFile
+import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
+import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.coditory.gradle.webjar.base.SpecProjectBuilder
 import com.coditory.gradle.webjar.base.readFile
 import com.coditory.gradle.webjar.base.writeFile

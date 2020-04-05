@@ -1,4 +1,4 @@
-package com.coditory.gradle.webjar
+package com.coditory.gradle.webjar.shared
 
 import org.gradle.api.Project
 import java.io.File
@@ -19,7 +19,12 @@ internal object VersionFiles {
     }
 
     private fun versionFile(project: Project, name: String): VersionFile {
-        return VersionFile(file(project, "node_modules/.${name}Version"))
+        return VersionFile(
+            file(
+                project,
+                "node_modules/.${name}Version"
+            )
+        )
     }
 
     class VersionFile(private val target: File) {

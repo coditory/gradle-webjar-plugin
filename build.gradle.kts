@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import pl.allegro.tech.build.axion.release.domain.hooks.HookContext
 import pl.allegro.tech.build.axion.release.domain.hooks.HooksConfig
 import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
@@ -54,6 +55,9 @@ group = "com.coditory.gradle"
 version = scmVersion.version
 
 tasks {
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions.jvmTarget = "11"
+    }
     withType<Test> {
         testLogging {
             events("passed", "failed", "skipped")

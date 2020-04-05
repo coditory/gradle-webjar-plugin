@@ -4,28 +4,32 @@ import java.io.File
 import java.util.jar.JarFile
 
 object JarExtractor {
-    fun extractJar(path: String) {
-        val jar = JarFile(path)
+    fun extractJar(jarFile: File, to: String? = null) {
+        extractJar(jarFile.absolutePath, to)
+    }
+
+    fun extractJar(path: String, to: String? = null) {
+        JarFile(path)
+            .use { extractJar(it, to) }
+    }
+
+    private fun extractJar(jar: JarFile, to: String? = null) {
         val jarFile = File(jar.name)
-        val distDir = jarFile.parent + File.separator
-        val libName = jarFile.name.split("\\.").first()
-        new File("${distDir+libName}").with {
+        val distDir = (to ?: jarFile.parent) + File.separator
+        val libName = jarFile.name.removeSuffix(".jar")
+        File(distDir + libName).let {
             if (!it.exists()) it.mkdir()
         }
-        distDir += libName+File.separator
-        for (JarEntry file in jar.entries()){
-            def f = new File("${distDir+file.name}")
-            if (file.isDirectory()){
-                f.mkdir()
-                continue
+        val extractDir = distDir + libName + File.separator
+        jar.entries().asIterator().forEach {
+            val file = File(extractDir + it.name)
+            if (it.isDirectory()) {
+                file.mkdir()
+            } else {
+                file.parentFile.mkdirs()
+                jar.getInputStream(it)
+                    .copyTo(file.outputStream())
             }
-            def is = jar.getInputStream(file)
-            f.withOutputStream { def stream ->
-                while (is.available()>0)
-                stream.write(is.read())
-            }
-            is.close()
         }
-        jar.close()
     }
 }

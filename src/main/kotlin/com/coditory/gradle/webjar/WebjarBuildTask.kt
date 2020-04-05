@@ -1,13 +1,13 @@
 package com.coditory.gradle.webjar
 
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingDirs
-import com.coditory.gradle.webjar.ProjectFiles.filterExistingFiles
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingDirs
+import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingFiles
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_BUILD_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.moowork.gradle.node.npm.NpmTask
 import org.gradle.api.Project
-import org.gradle.language.base.plugins.LifecycleBasePlugin.BUILD_TASK_NAME
+import org.gradle.api.plugins.JavaPlugin.PROCESS_RESOURCES_TASK_NAME
 
 internal object WebjarBuildTask {
     fun install(project: Project) {
@@ -17,15 +17,13 @@ internal object WebjarBuildTask {
             filterExistingDirs(project, "src").forEach {
                 task.inputs.dir(it)
             }
-            filterExistingFiles(project, ".babelrc", "package.json", "package-lock.json").forEach {
-                task.inputs.files(it)
-            }
+            task.inputs.files(".babelrc", "package.json", "package-lock.json")
             task.outputs.dir(project.buildDir.resolve("dist"))
             task.setArgs(listOf("run", "build"))
             task.doLast { copyToJarOutput(project) }
         }
         if (!WebjarSkipCondition.isWebjarSkipped(project)) {
-            project.tasks.named(BUILD_TASK_NAME).configure {
+            project.tasks.named(PROCESS_RESOURCES_TASK_NAME).configure {
                 it.dependsOn(buildTask)
             }
         }

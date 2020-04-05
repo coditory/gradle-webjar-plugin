@@ -23,6 +23,12 @@ class WebjarLintSpec {
         assertThat(lintTask.group).isEqualTo(WEBJAR_TASK_GROUP)
         assertThat(lintTask.args).isEqualTo(listOf("run", "lint"))
         assertThat(lintTask.outputs.files).contains(project.buildDir.resolve("lint"))
+        assertThat(lintTask.inputs.files).contains(
+            project.projectDir.resolve(".eslintrc"),
+            project.projectDir.resolve(".eslintignore"),
+            project.projectDir.resolve(".tslint"),
+            project.projectDir.resolve(".tslintignore")
+        )
         assertThat(lintTask.dependsOn).contains(
             WEBJAR_INSTALL_TASK,
             NpmSetupTask.NAME
@@ -31,14 +37,13 @@ class WebjarLintSpec {
 
     @Test
     fun `should dynamically add additional files to task inputs`() {
-        val inputFiles = listOf("src/index.js", ".eslintrc", ".eslintignore", ".tslint", ".tslintignore")
         val project = project()
-            .withFiles(inputFiles)
+            .withFile("src/index.js")
             .withPlugins(WebjarPlugin::class)
             .build()
         val lintTask = project.getNpmTask(WEBJAR_LINT_TASK)
-        assertThat(lintTask.inputs.files).containsAll(
-            inputFiles.map { project.projectDir.resolve(it) }
+        assertThat(lintTask.inputs.files).contains(
+            project.projectDir.resolve("src/index.js")
         )
     }
 
