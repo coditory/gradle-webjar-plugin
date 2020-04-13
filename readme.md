@@ -1,4 +1,4 @@
-# Webjar Gradle Plugin - Work in progress
+# Webjar Gradle Plugin
 
 [![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/coditory/gradle-webjar-plugin.svg?branch=master)](https://travis-ci.org/coditory/gradle-webjar-plugin)
