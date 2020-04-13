@@ -4,7 +4,6 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INIT_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
 import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
 import org.assertj.core.api.Assertions.assertThat

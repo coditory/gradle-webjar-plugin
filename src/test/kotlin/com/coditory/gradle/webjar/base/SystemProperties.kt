@@ -3,6 +3,10 @@ package com.coditory.gradle.webjar.base
 import java.util.Properties
 
 object SystemProperties {
+    fun <T> withSystemProperty(key: String, value: String, call: () -> T): T {
+        return withSystemProperties(mapOf(key to value), call)
+    }
+
     fun <T> withSystemProperties(properties: Map<String, String>, call: () -> T): T {
         val backup = toMap(System.getProperties())
         setSystemProperties(properties)

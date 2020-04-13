@@ -9,9 +9,8 @@ import com.moowork.gradle.node.task.SetupTask
 import org.gradle.api.Project
 
 object WebjarInitTask {
-
     fun install(project: Project) {
-        project.tasks.create(WEBJAR_INIT_TASK, NpmTask::class.java) { task ->
+        project.tasks.register(WEBJAR_INIT_TASK, NpmTask::class.java) { task ->
             task.dependsOn(SetupTask.NAME)
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WebjarPlugin.WEBJAR_TASK_GROUP

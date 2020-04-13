@@ -6,6 +6,7 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TEST_TASK
 import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
 import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
+import com.coditory.gradle.webjar.base.getNpmTaskProvider
 import com.coditory.gradle.webjar.base.getTask
 import com.moowork.gradle.node.npm.NpmSetupTask
 import org.assertj.core.api.Assertions.assertThat
@@ -22,7 +23,7 @@ class WebjarTestSpec {
         val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
         assertThat(testTask.group).isEqualTo(WEBJAR_TASK_GROUP)
         assertThat(testTask.args).isEqualTo(listOf("run", "test"))
-        assertThat(testTask.outputs.files).contains(project.buildDir.resolve("test"))
+        assertThat(testTask.outputs.files).contains(project.buildDir.resolve("test/timestamp"))
         assertThat(testTask.inputs.files).contains(
             project.projectDir.resolve(".babelrc"),
             project.projectDir.resolve("package.json"),
@@ -49,7 +50,7 @@ class WebjarTestSpec {
 
     @Test
     fun `should configure webjarTest task to run before test task`() {
-        val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
+        val testTask = project.getNpmTaskProvider(WEBJAR_TEST_TASK)
         val javaTestTask = project.getTask(JavaPlugin.TEST_TASK_NAME)
         assertThat(javaTestTask.dependsOn).contains(testTask)
     }
@@ -60,7 +61,7 @@ class WebjarTestSpec {
             .withSkipWebjarFlag()
             .withPlugins(WebjarPlugin::class)
             .build()
-        val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
+        val testTask = project.getNpmTaskProvider(WEBJAR_TEST_TASK)
         val javaTestTask = project.getTask(JavaPlugin.TEST_TASK_NAME)
         assertThat(javaTestTask.dependsOn).doesNotContain(testTask)
     }

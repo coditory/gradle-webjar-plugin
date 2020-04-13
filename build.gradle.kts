@@ -40,12 +40,12 @@ scmVersion {
     versionCreator("versionWithBranch")
     hooks = HooksConfig().also {
         it.pre(
-                "fileUpdate",
-                mapOf(
-                        "files" to listOf("readme.md") as Any,
-                        "pattern" to KotlinClosure2<String, HookContext, String>({ v, _ -> v }),
-                        "replacement" to KotlinClosure2<String, HookContext, String>({ v, _ -> v })
-                )
+            "fileUpdate",
+            mapOf(
+                "files" to listOf("readme.md") as Any,
+                "pattern" to KotlinClosure2<String, HookContext, String>({ v, _ -> v }),
+                "replacement" to KotlinClosure2<String, HookContext, String>({ v, _ -> v })
+            )
         )
         it.pre("commit", KotlinClosure2<String, ScmPosition, String>({ v, _ -> "Release: $v [ci skip]" }))
     }

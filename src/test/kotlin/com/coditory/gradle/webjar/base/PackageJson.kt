@@ -41,8 +41,8 @@ class PackageJson(
             val subSpace = " ".repeat(subPadding)
             val space = " ".repeat(padding)
             return value
-                .map { "${subSpace}\"${it.key}\": ${toJson(it.value, subPadding)}" }
-                .joinToString(",\n", "{\n", "\n${space}}")
+                .map { "$subSpace\"${it.key}\": ${toJson(it.value, subPadding)}" }
+                .joinToString(",\n", "{\n", "\n$space}")
         }
         return value.toString()
     }

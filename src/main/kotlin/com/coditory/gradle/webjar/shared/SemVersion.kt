@@ -1,6 +1,5 @@
 package com.coditory.gradle.webjar.shared
 
-import java.lang.IllegalArgumentException
 import java.lang.Integer.parseInt
 
 data class SemVersion(val major: Int, val minor: Int, val patch: Int) : Comparable<SemVersion> {
@@ -16,8 +15,8 @@ data class SemVersion(val major: Int, val minor: Int, val patch: Int) : Comparab
             .thenComparingInt { it.patch }
 
         fun parse(version: String): SemVersion {
-            return parseOrNull(version) ?:
-                throw IllegalArgumentException("Expected semantic version. Got\"$version\"")
+            return parseOrNull(version)
+                ?: throw IllegalArgumentException("Expected semantic version. Got\"$version\"")
         }
 
         fun parseOrNull(version: String?): SemVersion? {

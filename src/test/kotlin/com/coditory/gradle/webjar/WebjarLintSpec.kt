@@ -6,6 +6,7 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
 import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
+import com.coditory.gradle.webjar.base.getNpmTaskProvider
 import com.coditory.gradle.webjar.base.getTask
 import com.moowork.gradle.node.npm.NpmSetupTask
 import org.assertj.core.api.Assertions.assertThat
@@ -22,7 +23,7 @@ class WebjarLintSpec {
         val lintTask = project.getNpmTask(WEBJAR_LINT_TASK)
         assertThat(lintTask.group).isEqualTo(WEBJAR_TASK_GROUP)
         assertThat(lintTask.args).isEqualTo(listOf("run", "lint"))
-        assertThat(lintTask.outputs.files).contains(project.buildDir.resolve("lint"))
+        assertThat(lintTask.outputs.files).contains(project.buildDir.resolve("lint/timestamp"))
         assertThat(lintTask.inputs.files).contains(
             project.projectDir.resolve(".eslintrc"),
             project.projectDir.resolve(".eslintignore"),
@@ -49,7 +50,7 @@ class WebjarLintSpec {
 
     @Test
     fun `should configure webjarLint task to run before check task`() {
-        val lintTask = project.getNpmTask(WEBJAR_LINT_TASK)
+        val lintTask = project.getNpmTaskProvider(WEBJAR_LINT_TASK)
         val checkTask = project.getTask(CHECK_TASK_NAME)
         assertThat(checkTask.dependsOn).contains(lintTask)
     }
@@ -60,7 +61,7 @@ class WebjarLintSpec {
             .withSkipWebjarFlag()
             .withPlugins(WebjarPlugin::class)
             .build()
-        val lintTask = project.getNpmTask(WEBJAR_LINT_TASK)
+        val lintTask = project.getNpmTaskProvider(WEBJAR_LINT_TASK)
         val checkTask = project.getTask(CHECK_TASK_NAME)
         assertThat(checkTask.dependsOn).doesNotContain(lintTask)
     }

@@ -1,20 +1,18 @@
 package com.coditory.gradle.webjar
 
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INIT_TASK
-import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingFiles
-import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
-import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
+import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
+import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.moowork.gradle.node.NodeExtension
 import com.moowork.gradle.node.npm.NpmTask
-import com.moowork.gradle.node.task.SetupTask
 import org.gradle.api.Project
 
 internal object WebjarInstallTask {
     fun install(project: Project) {
-        project.tasks.create(WEBJAR_INSTALL_TASK, NpmTask::class.java) { task ->
+        project.tasks.register(WEBJAR_INSTALL_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INIT_TASK)
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WEBJAR_TASK_GROUP

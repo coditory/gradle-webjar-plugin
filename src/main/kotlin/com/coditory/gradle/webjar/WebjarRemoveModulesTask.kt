@@ -11,7 +11,7 @@ import org.gradle.api.logging.Logger
 
 internal object WebjarRemoveModulesTask {
     fun install(project: Project) {
-        project.tasks.create(WEBJAR_REMOVE_MODULES_TASK) {
+        project.tasks.register(WEBJAR_REMOVE_MODULES_TASK) {
             it.group = WEBJAR_TASK_GROUP
             removeStaleNpmModules(it.project, it.logger)
         }

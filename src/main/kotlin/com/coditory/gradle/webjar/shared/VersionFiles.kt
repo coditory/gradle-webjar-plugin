@@ -37,6 +37,7 @@ internal object VersionFiles {
         }
 
         fun write(content: String?) {
+            target.parentFile.mkdirs()
             target.createNewFile()
             val nonEmptyContent = if (content.isNullOrBlank()) UNDEFINED_VERSION else content
             target.writeText(nonEmptyContent)
