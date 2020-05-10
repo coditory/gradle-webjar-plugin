@@ -4,7 +4,7 @@ import pl.allegro.tech.build.axion.release.domain.hooks.HooksConfig
 import pl.allegro.tech.build.axion.release.domain.scm.ScmPosition
 
 plugins {
-    kotlin("jvm") version "1.3.70"
+    kotlin("jvm") version "1.3.72"
     id("jacoco")
     id("pl.allegro.tech.build.axion-release") version "1.11.0"
     id("com.github.kt3k.coveralls") version "2.10.1"
@@ -30,10 +30,10 @@ dependencies {
     implementation(kotlin("reflect"))
     implementation("com.github.node-gradle:gradle-node-plugin:2.2.3")
 
-    testImplementation("org.assertj:assertj-core:3.15.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.1")
+    testImplementation("org.assertj:assertj-core:3.16.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.6.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.2")
 }
 
 scmVersion {

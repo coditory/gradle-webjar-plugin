@@ -14,18 +14,27 @@ object WebjarTestTask {
         val testTask = project.tasks.register(WEBJAR_TEST_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INSTALL_TASK)
             task.group = WEBJAR_TASK_GROUP
-            filterExistingDirs(project, webjar.srcDir, webjar.testDir).forEach {
-                task.inputs.dir(it)
+            if (webjar.cacheTest) {
+                setupCache(task, project, webjar)
             }
-            task.inputs.files(".babelrc", "package.json", "package-lock.json")
-            task.outputs.file(project.buildDir.resolve(webjar.testTimestampFile))
             task.setArgs(listOf("run", webjar.testTaskName))
-            task.doLast { createTimeMarkerFile(project, webjar.testTimestampFile) }
         }
         if (!WebjarSkipCondition.isWebjarSkipped(project)) {
             project.tasks.named(TEST_TASK_NAME).configure {
                 it.dependsOn(testTask)
             }
         }
+    }
+
+    private fun setupCache(task: NpmTask, project: Project, webjar: WebjarExtension) {
+        filterExistingDirs(project, webjar.resolveSrcDirs()).forEach {
+            task.inputs.dir(it)
+        }
+        filterExistingDirs(project, webjar.resolveTestDirs()).forEach {
+            task.inputs.dir(it)
+        }
+        task.inputs.files(".babelrc", "package.json", "package-lock.json")
+        task.outputs.file(project.buildDir.resolve(webjar.testTimestampFile))
+        task.doLast { createTimeMarkerFile(project, webjar.testTimestampFile) }
     }
 }

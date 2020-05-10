@@ -37,6 +37,16 @@ class WebjarLintSpec {
     }
 
     @Test
+    fun `should skip lint caching from configuration`() {
+        project.extensions.configure(WebjarExtension::class.java) {
+            it.cacheLint = false
+        }
+        val testTask = project.getNpmTask(WEBJAR_LINT_TASK)
+        assertThat(testTask.outputs.files).isEmpty()
+        assertThat(testTask.inputs.files).isEmpty()
+    }
+
+    @Test
     fun `should dynamically add additional files to task inputs`() {
         val project = project()
             .withFile("src/index.js")

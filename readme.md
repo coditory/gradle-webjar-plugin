@@ -7,9 +7,9 @@
 
 This plugin connects JVM and Node based projects.
 It maps typical java to npm tasks (build, test, clean, etc).
-The build result is packed to a jar file so it can be imported as a dependency by a java project.
+The build result is packed into a jar file so it can be imported as a dependency by a java project.
 
-This plugin is dedicated for building frontend submodules but it can be used to build a [webjar library](#building-webjar-library).
+This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library).
 
 ## Enabling the plugin
 
@@ -66,10 +66,15 @@ webjar {
     lintTimestampFile = "lint/timestamp"
     // Front end project structure
     srcDir = "src"
+    srcDirs = emptyList()
     testDir = "tests"
+    testDirs = emptyList()
     distDir = "dist"
     // Directory in the output jar
     webjarDir = "static"
+    // caching options
+    cacheTest = true
+    cacheLint = true
 }
 ```
 All values from above example are defaults.

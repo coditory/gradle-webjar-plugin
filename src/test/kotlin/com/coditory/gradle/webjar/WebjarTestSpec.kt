@@ -36,6 +36,16 @@ class WebjarTestSpec {
     }
 
     @Test
+    fun `should skip test caching from configuration`() {
+        project.extensions.configure(WebjarExtension::class.java) {
+            it.cacheTest = false
+        }
+        val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
+        assertThat(testTask.outputs.files).isEmpty()
+        assertThat(testTask.inputs.files).isEmpty()
+    }
+
+    @Test
     fun `should dynamically add additional files to task inputs`() {
         val inputFiles = listOf("src/index.js", "tests/index.js")
         val project = project()

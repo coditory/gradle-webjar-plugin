@@ -13,11 +13,7 @@ internal object WebjarBuildTask {
         val buildTask = project.tasks.register(WEBJAR_BUILD_TASK, NpmTask::class.java) { task ->
             task.group = WEBJAR_TASK_GROUP
             task.dependsOn(WEBJAR_INSTALL_TASK)
-            filterExistingDirs(project, webjar.srcDir).forEach {
-                task.inputs.dir(it)
-            }
-            task.inputs.files(".babelrc", ".tsconfig.json", "package.json", "package-lock.json")
-            task.outputs.dir(project.buildDir.resolve(webjar.distDir))
+            setupCaching(project, webjar, task)
             task.setArgs(listOf("run", webjar.buildTaskName))
             task.doLast { copyToJarOutput(project, webjar) }
         }
@@ -26,6 +22,14 @@ internal object WebjarBuildTask {
                 it.dependsOn(buildTask)
             }
         }
+    }
+
+    private fun setupCaching(project: Project, webjar: WebjarExtension, task: NpmTask) {
+        filterExistingDirs(project, webjar.resolveSrcDirs()).forEach {
+            task.inputs.dir(it)
+        }
+        task.inputs.files(".babelrc", ".tsconfig.json", "package.json", "package-lock.json")
+        task.outputs.dir(project.buildDir.resolve(webjar.distDir))
     }
 
     private fun copyToJarOutput(project: Project, webjar: WebjarExtension) {

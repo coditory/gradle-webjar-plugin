@@ -15,18 +15,24 @@ internal object WebjarLintTask {
         val lintTask = project.tasks.register(WEBJAR_LINT_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INSTALL_TASK)
             task.group = WEBJAR_TASK_GROUP
-            filterExistingDirs(project, webjar.srcDir).forEach {
-                task.inputs.dir(it)
+            if (webjar.cacheLint) {
+                setupCache(task, project, webjar)
             }
-            task.inputs.files(".eslintrc", ".eslintignore", ".tslint", ".tslintignore")
-            task.outputs.file(project.buildDir.resolve(webjar.lintTimestampFile))
             task.setArgs(listOf("run", webjar.lintTaskName))
-            task.doLast { createTimeMarkerFile(project, webjar.lintTimestampFile) }
         }
         if (!WebjarSkipCondition.isWebjarSkipped(project)) {
             project.tasks.named(CHECK_TASK_NAME).configure {
                 it.dependsOn(lintTask)
             }
         }
+    }
+
+    private fun setupCache(task: NpmTask, project: Project, webjar: WebjarExtension) {
+        filterExistingDirs(project, webjar.resolveSrcDirs()).forEach {
+            task.inputs.dir(it)
+        }
+        task.inputs.files(".eslintrc", ".eslintignore", ".tslint", ".tslintignore")
+        task.outputs.file(project.buildDir.resolve(webjar.lintTimestampFile))
+        task.doLast { createTimeMarkerFile(project, webjar.lintTimestampFile) }
     }
 }
