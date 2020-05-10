@@ -9,7 +9,7 @@ This plugin connects JVM and Node based projects.
 It maps typical java to npm tasks (build, test, clean, etc).
 The build result is packed into a jar file so it can be imported as a dependency by a java project.
 
-This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library).
+This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library). See [sample usage](https://github.com/coditory/gradle-webjar-plugin-sample).
 
 ## Enabling the plugin
 
