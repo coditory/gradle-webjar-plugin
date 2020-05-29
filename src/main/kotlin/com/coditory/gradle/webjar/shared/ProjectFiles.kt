@@ -9,4 +9,11 @@ object ProjectFiles {
             .filter { it.isDirectory }
             .map { it.absolutePath }
     }
+
+    fun filterExistingFiles(project: Project, paths: List<String>): List<String> {
+        return paths
+            .map { project.projectDir.resolve(it) }
+            .filter { it.isFile }
+            .map { it.absolutePath }
+    }
 }

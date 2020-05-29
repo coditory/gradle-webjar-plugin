@@ -30,6 +30,12 @@ internal object WebjarBuildTask {
         }
         task.inputs.files(".babelrc", ".tsconfig.json", "package.json", "package-lock.json")
         task.outputs.dir(project.buildDir.resolve(webjar.distDir))
+        task.outputs.cacheIf { shouldCache(project, webjar) }
+    }
+
+    private fun shouldCache(project: Project, webjar: WebjarExtension): Boolean {
+        return project.buildDir.resolve(webjar.distDir).isDirectory &&
+            filterExistingDirs(project, webjar.resolveSrcDirs()).isNotEmpty()
     }
 
     private fun copyToJarOutput(project: Project, webjar: WebjarExtension) {
