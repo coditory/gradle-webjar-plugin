@@ -1,7 +1,7 @@
 # Webjar Gradle Plugin
 
 [![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.org/coditory/gradle-webjar-plugin.svg?branch=master)](https://travis-ci.org/coditory/gradle-webjar-plugin)
+[![Build Status](https://travis-ci.com/coditory/gradle-webjar-plugin.svg?branch=master)](https://travis-ci.com/coditory/gradle-webjar-plugin)
 [![Coverage Status](https://coveralls.io/repos/github/coditory/gradle-webjar-plugin/badge.svg)](https://coveralls.io/github/coditory/gradle-webjar-plugin)
 [![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v0.1.3-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
 
