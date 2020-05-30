@@ -70,8 +70,9 @@ webjar {
         lint = "lint"
         watch = "watch"
     }
+    
+    // Caching options
     cache {
-        // caching options
         enabled = true
         cacheTest = true
         cacheLint = true
@@ -113,7 +114,7 @@ All values from above example are defaults setup by webjar plugin.
 
 ## Using for a front end submodule
 
-There is a project with two submodules:
+There is a [sample project](https://github.com/coditory/gradle-webjar-plugin-sample) with two submodules:
 
 ```
 my-project
