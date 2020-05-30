@@ -25,9 +25,10 @@ class WebjarBuildSpec {
         val buildTask = project.getNpmTask(WEBJAR_BUILD_TASK)
         assertThat(buildTask.group).isEqualTo(WEBJAR_TASK_GROUP)
         assertThat(buildTask.args).isEqualTo(listOf("run", "build"))
-        assertThat(buildTask.outputs.files).contains(project.buildDir.resolve("dist"))
+        assertThat(buildTask.outputs.files).contains(project.projectDir.resolve("dist"))
         assertThat(buildTask.inputs.files).contains(
             project.projectDir.resolve(".babelrc"),
+            project.projectDir.resolve(".tsconfig.json"),
             project.projectDir.resolve("package.json"),
             project.projectDir.resolve("package-lock.json")
         )
@@ -85,7 +86,7 @@ class WebjarBuildSpec {
             .withPlugins(WebjarPlugin::class)
             .build()
         project.extensions.configure(WebjarExtension::class.java) {
-            it.buildTaskName = "build2"
+            it.taskNames.build = "build2"
         }
         val buildTask = project.getNpmTask(WEBJAR_BUILD_TASK)
         assertThat(buildTask.args).isEqualTo(listOf("run", "build2"))

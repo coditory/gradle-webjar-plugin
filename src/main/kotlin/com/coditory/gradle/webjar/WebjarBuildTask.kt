@@ -3,7 +3,6 @@ package com.coditory.gradle.webjar
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_BUILD_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingDirs
 import com.moowork.gradle.node.npm.NpmTask
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.PROCESS_RESOURCES_TASK_NAME
@@ -13,9 +12,11 @@ internal object WebjarBuildTask {
         val buildTask = project.tasks.register(WEBJAR_BUILD_TASK, NpmTask::class.java) { task ->
             task.group = WEBJAR_TASK_GROUP
             task.dependsOn(WEBJAR_INSTALL_TASK)
-            setupCaching(project, webjar, task)
-            task.setArgs(listOf("run", webjar.buildTaskName))
+            task.setArgs(listOf("run", webjar.taskNames.build))
             task.doLast { copyToJarOutput(project, webjar) }
+            if (webjar.cache.enabled) {
+                setupCaching(project, webjar, task)
+            }
         }
         if (!WebjarSkipCondition.isWebjarSkipped(project)) {
             project.tasks.named(PROCESS_RESOURCES_TASK_NAME).configure {
@@ -25,17 +26,17 @@ internal object WebjarBuildTask {
     }
 
     private fun setupCaching(project: Project, webjar: WebjarExtension, task: NpmTask) {
-        filterExistingDirs(project, webjar.resolveSrcDirs()).forEach {
-            task.inputs.dir(it)
-        }
-        task.inputs.files(".babelrc", ".tsconfig.json", "package.json", "package-lock.json")
-        task.outputs.dir(project.buildDir.resolve(webjar.distDir))
-        task.outputs.cacheIf { shouldCache(project, webjar) }
-    }
-
-    private fun shouldCache(project: Project, webjar: WebjarExtension): Boolean {
-        return project.buildDir.resolve(webjar.distDir).isDirectory &&
-            filterExistingDirs(project, webjar.resolveSrcDirs()).isNotEmpty()
+        webjar.cache.src
+            .map { project.projectDir.resolve(it) }
+            .forEach {
+                if (it.isDirectory) {
+                    task.inputs.dir(it)
+                } else if (it.isFile) {
+                    task.inputs.file(it)
+                }
+            }
+        task.inputs.files("package.json", "package-lock.json", ".babelrc", ".tsconfig.json")
+        task.outputs.dir(webjar.distDir)
     }
 
     private fun copyToJarOutput(project: Project, webjar: WebjarExtension) {

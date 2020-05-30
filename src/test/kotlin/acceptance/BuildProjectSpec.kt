@@ -1,4 +1,4 @@
-package com.coditory.gradle.webjar.acceptance
+package acceptance
 
 import com.coditory.gradle.webjar.base.JarExtractor
 import com.coditory.gradle.webjar.base.SpecProjectBuilder

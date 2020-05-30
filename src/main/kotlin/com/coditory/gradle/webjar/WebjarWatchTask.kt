@@ -12,7 +12,7 @@ internal object WebjarWatchTask {
         project.tasks.register(WEBJAR_WATCH_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INSTALL_TASK)
             task.group = WEBJAR_TASK_GROUP
-            task.setArgs(listOf("run", webjar.watchTaskName))
+            task.setArgs(listOf("run", webjar.taskNames.watch))
         }
     }
 }

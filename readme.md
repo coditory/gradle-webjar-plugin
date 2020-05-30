@@ -26,13 +26,13 @@ produced jar contains all front end resources.
 
 ## Tasks
 
-| Gradle Task     | Npm Task         | Description |
-| ---             | ---              | ---         |
-| `webjarClean`   | `clean`          | Cleans output directory |
-| `webjarLint`    | `lint`           | Checkstyle sources      |
-| `webjarTest`    | `test`           | Run tests               |
-| `webjarBuild`   | `build`          | Build Project           |
-| `webjarWatch`   | `watch`          | Run in watch mode. Should be run with `--no-daemon` in order to stop the process on `ctrl+c` |
+| Gradle Task     | Npm Task | Runs before    | Description |
+| ---             | ---      |---             | ---         |
+| `webjarClean`   | `clean`  | gradle `clean` | Cleans output directory |
+| `webjarLint`    | `lint`   | gradle `check` | Checkstyle sources      |
+| `webjarTest`    | `test`   | java `test`    | Run tests               |
+| `webjarBuild`   | `build`  | java `processResources` | Build Project  |
+| `webjarWatch`   | `watch`  | -              | Run in watch mode. Should be run with `--no-daemon` in order to stop the process on `ctrl+c` |
 
 There is also `webjarInit` that:
 - downloads Node and NPM
@@ -53,31 +53,37 @@ You can skip frontend build with:
 
 ### Configuring Webjar plugin
 
+All presented values are defaults.
+
 ```gradle
 webjar {
-    // NPM Task names
-    cleanTaskName = "clean"
-    buildTaskName = "build"
-    testTaskName = "test"
-    lintTaskName = "lint"
-    watchTaskName = "watch"
-    // Some timestamp files used for gradle caching
-    testTimestampFile = "test/timestamp"
-    lintTimestampFile = "lint/timestamp"
-    // Front end project structure
-    srcDir = "src"
-    srcDirs = emptyList()
-    testDir = "tests"
-    testDirs = emptyList()
+    // Directory where npm puts the result
     distDir = "dist"
-    // Directory in the output jar
+    // Directory with npm results in the jar
     webjarDir = "static"
-    // caching options
-    cacheTest = true
-    cacheLint = true
+
+    // NPM Task names
+    taskNames {
+        clean = "clean"
+        build = "build"
+        test = "test"
+        lint = "lint"
+        watch = "watch"
+    }
+    cache {
+        // caching options
+        enabled = true
+        cacheTest = true
+        cacheLint = true
+        // Some timestamp files used for gradle caching
+        testTimestampFile = "test/timestamp"
+        lintTimestampFile = "lint/timestamp"
+        // Location of src and dest input files
+        src = listOf("src")
+        test = listOf("tests")
+    }
 }
 ```
-All values from above example are defaults.
 
 ### Configuring Node and NPM
 Webjar plugin uses great [`gradle-node-plugin`](https://github.com/node-gradle/gradle-node-plugin).

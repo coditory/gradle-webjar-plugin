@@ -27,8 +27,7 @@ class WebjarLintSpec {
         assertThat(lintTask.inputs.files).contains(
             project.projectDir.resolve(".eslintrc"),
             project.projectDir.resolve(".eslintignore"),
-            project.projectDir.resolve(".tslint"),
-            project.projectDir.resolve(".tslintignore")
+            project.projectDir.resolve("package.json")
         )
         assertThat(lintTask.dependsOn).contains(
             WEBJAR_INSTALL_TASK,
@@ -39,7 +38,7 @@ class WebjarLintSpec {
     @Test
     fun `should skip lint caching from configuration`() {
         project.extensions.configure(WebjarExtension::class.java) {
-            it.cacheLint = false
+            it.cache.cacheLint = false
         }
         val testTask = project.getNpmTask(WEBJAR_LINT_TASK)
         assertThat(testTask.outputs.files).isEmpty()

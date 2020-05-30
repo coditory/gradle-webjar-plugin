@@ -14,7 +14,7 @@ internal object WebjarCleanTask {
         val cleanTask = project.tasks.register(WEBJAR_CLEAN_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INSTALL_TASK)
             task.group = WEBJAR_TASK_GROUP
-            task.setArgs(listOf("run", webjar.cleanTaskName))
+            task.setArgs(listOf("run", webjar.taskNames.clean))
         }
         if (!isWebjarSkipped(project)) {
             project.tasks.named(CLEAN_TASK_NAME).configure {

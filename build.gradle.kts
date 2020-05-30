@@ -8,7 +8,7 @@ plugins {
     id("jacoco")
     id("pl.allegro.tech.build.axion-release") version "1.11.0"
     id("com.github.kt3k.coveralls") version "2.10.1"
-    id("com.gradle.plugin-publish") version "0.11.0"
+    id("com.gradle.plugin-publish") version "0.12.0"
     id("java-gradle-plugin")
     id("maven-publish")
     id("org.jlleitschuh.gradle.ktlint") version "9.2.1"
@@ -28,7 +28,7 @@ dependencies {
     implementation(gradleApi())
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    implementation("com.github.node-gradle:gradle-node-plugin:2.2.3")
+    implementation("com.github.node-gradle:gradle-node-plugin:2.2.4")
 
     testImplementation("org.assertj:assertj-core:3.16.1")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.6.2")

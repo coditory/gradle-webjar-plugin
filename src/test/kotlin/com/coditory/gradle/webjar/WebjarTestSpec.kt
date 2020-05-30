@@ -38,7 +38,7 @@ class WebjarTestSpec {
     @Test
     fun `should skip test caching from configuration`() {
         project.extensions.configure(WebjarExtension::class.java) {
-            it.cacheTest = false
+            it.cache.cacheTest = false
         }
         val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
         assertThat(testTask.outputs.files).isEmpty()

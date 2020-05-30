@@ -4,8 +4,6 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INIT_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingDirs
-import com.coditory.gradle.webjar.shared.ProjectFiles.filterExistingFiles
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
 import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.moowork.gradle.node.NodeExtension
@@ -18,21 +16,15 @@ internal object WebjarInstallTask {
             task.dependsOn(WEBJAR_INIT_TASK)
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WEBJAR_TASK_GROUP
-            setupCaching(project, task)
+            setupCaching(task)
             task.setArgs(listOf("install", "--no-package-lock", "--no-save"))
             task.doLast { writeVersionFiles(project) }
         }
     }
 
-    private fun setupCaching(project: Project, task: NpmTask) {
+    private fun setupCaching(task: NpmTask) {
         task.inputs.files("package.json", "package-lock.json")
         task.outputs.dir("node_modules")
-        task.outputs.cacheIf { shouldCache(project) }
-    }
-
-    private fun shouldCache(project: Project): Boolean {
-        return filterExistingFiles(project, listOf("package.json", "package-lock.json")).isNotEmpty() &&
-            filterExistingDirs(project, listOf("node_modules")).isNotEmpty()
     }
 
     private fun writeVersionFiles(project: Project) {

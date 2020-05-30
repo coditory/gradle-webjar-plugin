@@ -14,11 +14,15 @@ object WebjarInitTask {
             task.dependsOn(SetupTask.NAME)
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WebjarPlugin.WEBJAR_TASK_GROUP
-            task.inputs.files("package.json")
-            task.outputs.file("package-lock.json")
             task.setArgs(resolveNpmArguments(project))
             task.doFirst { ensurePackageJson(project) }
+            setupCaching(task)
         }
+    }
+
+    private fun setupCaching(task: NpmTask) {
+        task.inputs.files("package.json")
+        task.outputs.file("package-lock.json")
     }
 
     private fun resolveNpmArguments(project: Project): List<String> {
