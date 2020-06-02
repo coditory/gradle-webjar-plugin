@@ -1,11 +1,21 @@
 package com.coditory.gradle.webjar
 
+import org.gradle.api.Action
+
 open class WebjarExtension {
     var distDir: String = "dist"
     var outputDir: String = "webjar"
     var webjarDir: String = "static"
     var taskNames: WebjarTaskNames = WebjarTaskNames()
     var cache: WebjarCache = WebjarCache()
+
+    fun taskNames(config: Action<in WebjarTaskNames>) {
+        config.execute(taskNames)
+    }
+
+    fun cache(config: Action<in WebjarCache>) {
+        config.execute(cache)
+    }
 }
 
 open class WebjarTaskNames {
@@ -27,6 +37,6 @@ open class WebjarCache {
     var dist: String = "dist"
 
     // relative to project build directory
-    var testTimestamp: String = "test/timestamp"
-    var lintTimestamp: String = "lint/timestamp"
+    var testTimestampFile: String = "test/timestamp"
+    var lintTimestampFile: String = "lint/timestamp"
 }

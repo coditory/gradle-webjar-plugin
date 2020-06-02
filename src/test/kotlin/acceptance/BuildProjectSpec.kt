@@ -21,6 +21,36 @@ class BuildProjectSpec {
                 id 'com.coditory.webjar'
             }
             version = '0.1.0-SNAPSHOT'
+
+            // Default values just to check if mapping works
+            webjar {
+                // Directory where npm puts the result
+                distDir = "dist"
+                // Directory with npm results in the jar
+                webjarDir = "static"
+
+                // NPM Task names
+                taskNames {
+                    clean = "clean"
+                    build = "build"
+                    test = "test"
+                    lint = "lint"
+                    watch = "watch"
+                }
+
+                // Caching options
+                cache {
+                    enabled = true
+                    cacheTest = true
+                    cacheLint = true
+                    // Some timestamp files used for gradle caching
+                    testTimestampFile = "test/timestamp"
+                    lintTimestampFile = "lint/timestamp"
+                    // Location of src and dest input files
+                    src = ["src"]
+                    test = ["tests"]
+                }
+            }
             """.trimIndent()
         )
         .withFile(

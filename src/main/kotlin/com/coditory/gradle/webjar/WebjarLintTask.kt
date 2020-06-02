@@ -37,7 +37,7 @@ internal object WebjarLintTask {
                 }
             }
         task.inputs.files(".eslintrc", ".eslintignore", "package.json")
-        task.outputs.file(project.buildDir.resolve(webjar.cache.lintTimestamp))
-        task.doLast { createTimeMarkerFile(project, webjar.cache.lintTimestamp) }
+        task.outputs.file(project.buildDir.resolve(webjar.cache.lintTimestampFile))
+        task.doLast { createTimeMarkerFile(project, webjar.cache.lintTimestampFile) }
     }
 }

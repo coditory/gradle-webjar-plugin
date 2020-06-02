@@ -29,8 +29,8 @@ object WebjarTestTask {
         cacheInputs(webjar.cache.src, project, task)
         cacheInputs(webjar.cache.test, project, task)
         task.inputs.files(".babelrc", "jest.config.js", "cypress.json", "package.json", "package-lock.json")
-        task.outputs.file(project.buildDir.resolve(webjar.cache.testTimestamp))
-        task.doLast { createTimeMarkerFile(project, webjar.cache.testTimestamp) }
+        task.outputs.file(project.buildDir.resolve(webjar.cache.testTimestampFile))
+        task.doLast { createTimeMarkerFile(project, webjar.cache.testTimestampFile) }
     }
 
     private fun cacheInputs(paths: List<String>, project: Project, task: NpmTask) {
