@@ -29,8 +29,8 @@ open class WebjarPlugin : Plugin<Project> {
             it.npmWorkDir = project.projectDir.resolve(".node/npm")
             it.yarnWorkDir = project.projectDir.resolve(".node/yarn")
             it.download = true
-            it.version = "13.12.0"
-            it.npmVersion = "6.14.4"
+            it.version = "14.14.0"
+            it.npmVersion = "6.14.8"
         }
     }
 

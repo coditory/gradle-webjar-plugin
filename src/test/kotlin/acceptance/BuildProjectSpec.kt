@@ -113,7 +113,7 @@ class BuildProjectSpec {
     }
 
     private fun expectNodeAndNpmVersionFiles() {
-        assertThat(project.readFile("node_modules/.nodeVersion")).isEqualTo("13.12.0")
-        assertThat(project.readFile("node_modules/.npmVersion")).isEqualTo("6.14.4")
+        assertThat(project.readFile("node_modules/.nodeVersion")).isEqualTo("14.14.0")
+        assertThat(project.readFile("node_modules/.npmVersion")).isEqualTo("6.14.8")
     }
 }
