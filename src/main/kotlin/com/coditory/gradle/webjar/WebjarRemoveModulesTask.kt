@@ -1,10 +1,10 @@
 package com.coditory.gradle.webjar
 
+import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
+import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.shared.VersionFiles.UNDEFINED_VERSION
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
 import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
-import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_TASK
-import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.moowork.gradle.node.NodeExtension
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger

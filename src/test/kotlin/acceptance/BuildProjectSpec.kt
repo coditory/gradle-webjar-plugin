@@ -51,25 +51,25 @@ class BuildProjectSpec {
                     test = ["tests"]
                 }
             }
-            """.trimIndent()
+            """
         )
         .withFile(
             "package.json",
             """
             {
-                "name": "sample-project",
-                "scripts": {
-                    "lint": "echo 'no lint problems'",
-                    "test": "echo 'tests passed'",
-                    "clean": "rm -rf dist",
-                    "build": "mkdir -p dist && echo 'console.log(\"Some js\")' > dist/index.js",
-                    "watch": "echo 'missing watch script'"
-                },
-                "dependencies": {
-                    "@coditory/jsdeep": "^1.0.5"
-                }
+              "name": "sample-project",
+              "scripts": {
+                "lint": "echo 'no lint problems'",
+                "test": "echo 'tests passed'",
+                "clean": "rm -rf dist",
+                "build": "mkdir -p dist && echo 'console.log(\"Some js\")' > dist/index.js",
+                "watch": "echo 'missing watch script'"
+              },
+              "dependencies": {
+                "@coditory/jsdeep": "^1.0.5"
+              }
             }
-            """.trimIndent()
+            """
         )
         .build()
 

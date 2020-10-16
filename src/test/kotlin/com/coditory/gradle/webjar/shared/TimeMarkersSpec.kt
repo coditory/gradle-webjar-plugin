@@ -1,9 +1,9 @@
 package com.coditory.gradle.webjar.shared
 
-import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
 import com.coditory.gradle.webjar.base.SpecProjectBuilder
 import com.coditory.gradle.webjar.base.UpdatableFixedClock
 import com.coditory.gradle.webjar.base.readBuildFile
+import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

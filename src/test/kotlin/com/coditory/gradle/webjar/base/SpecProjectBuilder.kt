@@ -47,7 +47,7 @@ class SpecProjectBuilder private constructor(projectDir: File, name: String) {
 
     fun withBuildGradle(content: String): SpecProjectBuilder {
         val buildFile = project.rootDir.resolve("build.gradle")
-        buildFile.writeText(content.trimIndent().trim())
+        buildFile.writeText(content.trimIndent().trim() + "\n")
         return this
     }
 
@@ -55,7 +55,7 @@ class SpecProjectBuilder private constructor(projectDir: File, name: String) {
         val filePath = project.rootDir.resolve(path).toPath()
         Files.createDirectories(filePath.parent)
         val testFile = Files.createFile(filePath).toFile()
-        testFile.writeText(content.trimIndent().trim())
+        testFile.writeText(content.trimIndent().trim() + "\n")
         return this
     }
 
