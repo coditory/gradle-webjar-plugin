@@ -18,7 +18,7 @@ class WebjarInstallSpec {
     fun `should configure webjarInstall task`() {
         val installTask = project.getNpmTask(WEBJAR_INSTALL_TASK)
         assertThat(installTask.group).isEqualTo(WEBJAR_TASK_GROUP)
-        assertThat(installTask.args).isEqualTo(listOf("install", "--no-package-lock", "--no-save"))
+        assertThat(installTask.args).isEqualTo(listOf("install"))
         assertThat(installTask.outputs.files).contains(project.projectDir.resolve("node_modules"))
         assertThat(installTask.inputs.files).contains(
             project.projectDir.resolve("package.json"),

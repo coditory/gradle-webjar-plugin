@@ -17,7 +17,7 @@ internal object WebjarInstallTask {
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WEBJAR_TASK_GROUP
             setupCaching(task)
-            task.setArgs(listOf("install", "--no-package-lock", "--no-save"))
+            task.setArgs(listOf("install"))
             task.doLast { writeVersionFiles(project) }
         }
     }
