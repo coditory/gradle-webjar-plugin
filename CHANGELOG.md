@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [1.0.3] - 2020-10-10
+### Changed
+- Update dependencies and migrate to GitHub Actions.
+
 ## [1.0.2] - 2020-08-18
 ### Changed
 - Fix `npm install` command, so it uses `package-lock.json`.
