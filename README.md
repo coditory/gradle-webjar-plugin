@@ -1,7 +1,7 @@
 # Webjar Gradle Plugin
 [![Build Status](https://github.com/coditory/gradle-webjar-plugin/workflows/Build/badge.svg?branch=master)](https://github.com/coditory/gradle-webjar-plugin/actions?query=workflow%3ABuild+branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/coditory/gradle-webjar-plugin/badge.svg?branch=master)](https://coveralls.io/github/coditory/gradle-webjar-plugin?branch=master)
-[![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v1.0.2-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
+[![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v1.0.3-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
 [![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This plugin connects JVM and Node based projects.
@@ -16,7 +16,7 @@ Add to your `build.gradle`:
 
 ```gradle
 plugins {
-  id 'com.coditory.webjar' version '1.0.2'
+  id 'com.coditory.webjar' version '1.0.3'
 }
 ```
 
