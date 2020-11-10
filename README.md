@@ -1,13 +1,12 @@
 # Webjar Gradle Plugin
-
-[![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://travis-ci.com/coditory/gradle-webjar-plugin.svg?branch=master)](https://travis-ci.com/coditory/gradle-webjar-plugin)
-[![Coverage Status](https://coveralls.io/repos/github/coditory/gradle-webjar-plugin/badge.svg)](https://coveralls.io/github/coditory/gradle-webjar-plugin)
+[![Build Status](https://github.com/coditory/gradle-webjar-plugin/workflows/Build/badge.svg?branch=master)](https://github.com/coditory/gradle-webjar-plugin/actions?query=workflow%3ABuild+branch%3Amaster)
+[![Coverage Status](https://coveralls.io/repos/github/coditory/gradle-webjar-plugin/badge.svg?branch=master)](https://coveralls.io/github/coditory/gradle-webjar-plugin?branch=master)
 [![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v1.0.2-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
+[![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This plugin connects JVM and Node based projects.
 It maps typical java to npm tasks (build, test, clean, etc).
-The build result is packed into a jar file so it can be imported as a dependency by a java project.
+The build result is packed into a jar file, so it can be imported as a dependency by a java project.
 
 This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library). See [sample usage](https://github.com/coditory/gradle-webjar-plugin-sample).
 
@@ -70,7 +69,7 @@ webjar {
         lint = "lint"
         watch = "watch"
     }
-    
+
     // Caching options
     cache {
         enabled = true

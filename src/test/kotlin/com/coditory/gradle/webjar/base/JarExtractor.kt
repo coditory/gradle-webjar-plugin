@@ -21,7 +21,7 @@ object JarExtractor {
             if (!it.exists()) it.mkdir()
         }
         val extractDir = distDir + libName + File.separator
-        jar.entries().asIterator().forEach {
+        jar.entries().toList().forEach {
             val file = File(extractDir + it.name)
             if (it.isDirectory()) {
                 file.mkdir()
