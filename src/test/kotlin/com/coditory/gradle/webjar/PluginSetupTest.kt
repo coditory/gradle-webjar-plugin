@@ -1,11 +1,11 @@
 package com.coditory.gradle.webjar
 
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
-import com.moowork.gradle.node.NodePlugin
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.projectWithPlugins
+import com.github.gradle.node.NodePlugin
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PluginSetupSpec {
+class PluginSetupTest {
     private val project = projectWithPlugins()
         .build()
 

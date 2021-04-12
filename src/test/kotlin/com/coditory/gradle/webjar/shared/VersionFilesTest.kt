@@ -1,6 +1,6 @@
 package com.coditory.gradle.webjar.shared
 
-import com.coditory.gradle.webjar.base.SpecProjectBuilder
+import com.coditory.gradle.webjar.base.TestProjectBuilder
 import com.coditory.gradle.webjar.base.readFile
 import com.coditory.gradle.webjar.base.writeFile
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
@@ -8,8 +8,8 @@ import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class VersionFilesSpec {
-    private val project = SpecProjectBuilder.projectWithPlugins()
+class VersionFilesTest {
+    private val project = TestProjectBuilder.projectWithPlugins()
         .withSamplePackageJson()
         .build()
 

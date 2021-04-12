@@ -1,8 +1,8 @@
 package acceptance
 
 import com.coditory.gradle.webjar.base.PackageJson.Companion.packageJson
-import com.coditory.gradle.webjar.base.SpecProjectBuilder
-import com.coditory.gradle.webjar.base.SpecProjectRunner.runGradle
+import com.coditory.gradle.webjar.base.TestProjectBuilder
+import com.coditory.gradle.webjar.base.TestProjectRunner.runGradle
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.gradle.testkit.runner.TaskOutcome.SUCCESS
@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
-class FailBuildSpec {
-    private val project = SpecProjectBuilder.project("sample-project")
+class FailBuildTest {
+    private val project = TestProjectBuilder.project("sample-project")
         .withBuildGradle(
             """
             plugins {

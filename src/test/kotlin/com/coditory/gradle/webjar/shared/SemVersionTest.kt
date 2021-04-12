@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import java.lang.IllegalArgumentException
 
-class SemVersionSpec {
+class SemVersionTest {
     @Test
     fun `should parse sem version`() {
         val version = SemVersion.parse("1.2.3")

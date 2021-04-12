@@ -6,8 +6,8 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_REMOVE_MODULES_T
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
 import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
-import com.moowork.gradle.node.NodeExtension
-import com.moowork.gradle.node.npm.NpmTask
+import com.github.gradle.node.NodeExtension
+import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 
 internal object WebjarInstallTask {
@@ -17,7 +17,7 @@ internal object WebjarInstallTask {
             task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
             task.group = WEBJAR_TASK_GROUP
             setupCaching(task)
-            task.setArgs(listOf("install"))
+            task.args.set(listOf("install"))
             task.doLast { writeVersionFiles(project) }
         }
     }
@@ -29,7 +29,7 @@ internal object WebjarInstallTask {
 
     private fun writeVersionFiles(project: Project) {
         val node = project.extensions.findByType(NodeExtension::class.java)
-        nodeVersionFile(project).write(node?.version)
-        npmVersionFile(project).write(node?.npmVersion)
+        nodeVersionFile(project).write(node?.version?.orNull)
+        npmVersionFile(project).write(node?.npmVersion?.orNull)
     }
 }

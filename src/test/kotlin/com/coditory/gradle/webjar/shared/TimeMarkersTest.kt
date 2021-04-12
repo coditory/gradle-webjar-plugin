@@ -1,15 +1,15 @@
 package com.coditory.gradle.webjar.shared
 
-import com.coditory.gradle.webjar.base.SpecProjectBuilder
+import com.coditory.gradle.webjar.base.TestProjectBuilder
 import com.coditory.gradle.webjar.base.UpdatableFixedClock
 import com.coditory.gradle.webjar.base.readBuildFile
 import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class TimeMarkersSpec {
+class TimeMarkersTest {
     private val clock = UpdatableFixedClock()
-    private val project = SpecProjectBuilder.projectWithPlugins()
+    private val project = TestProjectBuilder.projectWithPlugins()
         .withSamplePackageJson()
         .build()
 

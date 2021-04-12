@@ -3,17 +3,17 @@ package com.coditory.gradle.webjar
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_LINT_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.project
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
 import com.coditory.gradle.webjar.base.getNpmTaskProvider
 import com.coditory.gradle.webjar.base.getTask
-import com.moowork.gradle.node.npm.NpmSetupTask
+import com.github.gradle.node.npm.task.NpmSetupTask
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.language.base.plugins.LifecycleBasePlugin.CHECK_TASK_NAME
 import org.junit.jupiter.api.Test
 
-class WebjarLintSpec {
+class WebjarLintTest {
     private val project = projectWithPlugins()
         .withSamplePackageJson()
         .build()
@@ -22,7 +22,7 @@ class WebjarLintSpec {
     fun `should configure webjarLint task`() {
         val lintTask = project.getNpmTask(WEBJAR_LINT_TASK)
         assertThat(lintTask.group).isEqualTo(WEBJAR_TASK_GROUP)
-        assertThat(lintTask.args).isEqualTo(listOf("run", "lint"))
+        assertThat(lintTask.args.get()).isEqualTo(listOf("run", "lint"))
         assertThat(lintTask.outputs.files).contains(project.buildDir.resolve("lint/timestamp"))
         assertThat(lintTask.inputs.files).contains(
             project.projectDir.resolve(".eslintrc"),

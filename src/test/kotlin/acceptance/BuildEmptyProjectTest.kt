@@ -1,14 +1,14 @@
 package acceptance
 
-import com.coditory.gradle.webjar.base.SpecProjectBuilder
-import com.coditory.gradle.webjar.base.SpecProjectRunner.runGradle
+import com.coditory.gradle.webjar.base.TestProjectBuilder
+import com.coditory.gradle.webjar.base.TestProjectRunner.runGradle
 import com.coditory.gradle.webjar.base.readFile
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.jupiter.api.Test
 
-class BuildEmptyProjectSpec {
-    private val project = SpecProjectBuilder.project("sample-project")
+class BuildEmptyProjectTest {
+    private val project = TestProjectBuilder.project("sample-project")
         .withBuildGradle(
             """
             plugins {

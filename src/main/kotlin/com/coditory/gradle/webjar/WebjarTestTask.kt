@@ -4,7 +4,7 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TEST_TASK
 import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
-import com.moowork.gradle.node.npm.NpmTask
+import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.TEST_TASK_NAME
 
@@ -16,7 +16,7 @@ object WebjarTestTask {
             if (webjar.cache.enabled && webjar.cache.cacheTest) {
                 setupCache(task, project, webjar)
             }
-            task.setArgs(listOf("run", webjar.taskNames.test))
+            task.args.set(listOf("run", webjar.taskNames.test))
         }
         if (!WebjarSkipCondition.isWebjarSkipped(project)) {
             project.tasks.named(TEST_TASK_NAME).configure {

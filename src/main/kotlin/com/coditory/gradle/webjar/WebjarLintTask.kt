@@ -4,7 +4,7 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_LINT_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.shared.TimeMarkers.createTimeMarkerFile
-import com.moowork.gradle.node.npm.NpmTask
+import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 import org.gradle.language.base.plugins.LifecycleBasePlugin.CHECK_TASK_NAME
 
@@ -14,7 +14,7 @@ internal object WebjarLintTask {
         val lintTask = project.tasks.register(WEBJAR_LINT_TASK, NpmTask::class.java) { task ->
             task.dependsOn(WEBJAR_INSTALL_TASK)
             task.group = WEBJAR_TASK_GROUP
-            task.setArgs(listOf("run", webjar.taskNames.lint))
+            task.args.set(listOf("run", webjar.taskNames.lint))
             if (webjar.cache.enabled && webjar.cache.cacheLint) {
                 setupCache(task, project, webjar)
             }

@@ -92,9 +92,9 @@ You can configure Node and NPM with:
 ```gradle
 node {
   // Version of node to use.
-  version = '13.12.0'
+  version = '15.14.0'
   // Version of npm to use.
-  npmVersion = '6.14.4'
+  npmVersion = '7.7.6'
   // Base URL for fetching node distributions (change if you have a mirror).
   // Or set to null if you want to add the repository on your own.
   distBaseUrl = 'https://nodejs.org/dist'

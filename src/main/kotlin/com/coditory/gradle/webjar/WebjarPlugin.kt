@@ -1,7 +1,7 @@
 package com.coditory.gradle.webjar
 
-import com.moowork.gradle.node.NodeExtension
-import com.moowork.gradle.node.NodePlugin
+import com.github.gradle.node.NodeExtension
+import com.github.gradle.node.NodePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
@@ -25,12 +25,12 @@ open class WebjarPlugin : Plugin<Project> {
             .resources.srcDir(project.buildDir.resolve(webjar.outputDir))
         project.plugins.apply(NodePlugin::class.java)
         project.extensions.configure(NodeExtension::class.java) {
-            it.workDir = project.projectDir.resolve(".node/node")
-            it.npmWorkDir = project.projectDir.resolve(".node/npm")
-            it.yarnWorkDir = project.projectDir.resolve(".node/yarn")
-            it.download = true
-            it.version = "14.14.0"
-            it.npmVersion = "6.14.8"
+            it.workDir.set(project.projectDir.resolve(".node/node"))
+            it.npmWorkDir.set(project.projectDir.resolve(".node/npm"))
+            it.yarnWorkDir.set(project.projectDir.resolve(".node/yarn"))
+            it.download.set(true)
+            it.version.set("15.14.0")
+            it.npmVersion.set("7.7.6")
         }
     }
 

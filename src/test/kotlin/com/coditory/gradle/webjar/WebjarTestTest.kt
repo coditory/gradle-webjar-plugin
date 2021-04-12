@@ -3,17 +3,17 @@ package com.coditory.gradle.webjar
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TEST_TASK
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.project
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
 import com.coditory.gradle.webjar.base.getNpmTaskProvider
 import com.coditory.gradle.webjar.base.getTask
-import com.moowork.gradle.node.npm.NpmSetupTask
+import com.github.gradle.node.npm.task.NpmSetupTask
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.api.plugins.JavaPlugin
 import org.junit.jupiter.api.Test
 
-class WebjarTestSpec {
+class WebjarTestTest {
     private val project = projectWithPlugins()
         .withSamplePackageJson()
         .build()
@@ -22,7 +22,7 @@ class WebjarTestSpec {
     fun `should configure webjarTest task`() {
         val testTask = project.getNpmTask(WEBJAR_TEST_TASK)
         assertThat(testTask.group).isEqualTo(WEBJAR_TASK_GROUP)
-        assertThat(testTask.args).isEqualTo(listOf("run", "test"))
+        assertThat(testTask.args.get()).isEqualTo(listOf("run", "test"))
         assertThat(testTask.outputs.files).contains(project.buildDir.resolve("test/timestamp"))
         assertThat(testTask.inputs.files).contains(
             project.projectDir.resolve(".babelrc"),

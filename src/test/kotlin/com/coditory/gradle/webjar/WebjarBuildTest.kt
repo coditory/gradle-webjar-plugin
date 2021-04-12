@@ -3,19 +3,19 @@ package com.coditory.gradle.webjar
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_BUILD_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.project
-import com.coditory.gradle.webjar.base.SpecProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.SystemProperties.withSystemProperty
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.project
+import com.coditory.gradle.webjar.base.TestProjectBuilder.Companion.projectWithPlugins
 import com.coditory.gradle.webjar.base.getNpmTask
 import com.coditory.gradle.webjar.base.getNpmTaskProvider
 import com.coditory.gradle.webjar.base.getTask
-import com.moowork.gradle.node.npm.NpmSetupTask
+import com.github.gradle.node.npm.task.NpmSetupTask
 import org.assertj.core.api.Assertions.assertThat
 import org.gradle.api.plugins.JavaPlugin.PROCESS_RESOURCES_TASK_NAME
 import org.gradle.language.base.plugins.LifecycleBasePlugin.BUILD_TASK_NAME
 import org.junit.jupiter.api.Test
 
-class WebjarBuildSpec {
+class WebjarBuildTest {
     private val project = projectWithPlugins()
         .withSamplePackageJson()
         .build()
@@ -24,7 +24,7 @@ class WebjarBuildSpec {
     fun `should configure webjarBuild task`() {
         val buildTask = project.getNpmTask(WEBJAR_BUILD_TASK)
         assertThat(buildTask.group).isEqualTo(WEBJAR_TASK_GROUP)
-        assertThat(buildTask.args).isEqualTo(listOf("run", "build"))
+        assertThat(buildTask.args.get()).isEqualTo(listOf("run", "build"))
         assertThat(buildTask.outputs.files).contains(project.projectDir.resolve("dist"))
         assertThat(buildTask.inputs.files).contains(
             project.projectDir.resolve(".babelrc"),
@@ -89,6 +89,6 @@ class WebjarBuildSpec {
             it.taskNames.build = "build2"
         }
         val buildTask = project.getNpmTask(WEBJAR_BUILD_TASK)
-        assertThat(buildTask.args).isEqualTo(listOf("run", "build2"))
+        assertThat(buildTask.args.get()).isEqualTo(listOf("run", "build2"))
     }
 }

@@ -3,7 +3,7 @@ package com.coditory.gradle.webjar
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_BUILD_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_INSTALL_TASK
 import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
-import com.moowork.gradle.node.npm.NpmTask
+import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin.PROCESS_RESOURCES_TASK_NAME
 
@@ -12,7 +12,7 @@ internal object WebjarBuildTask {
         val buildTask = project.tasks.register(WEBJAR_BUILD_TASK, NpmTask::class.java) { task ->
             task.group = WEBJAR_TASK_GROUP
             task.dependsOn(WEBJAR_INSTALL_TASK)
-            task.setArgs(listOf("run", webjar.taskNames.build))
+            task.args.set(listOf("run", webjar.taskNames.build))
             task.doLast { copyToJarOutput(project, webjar) }
             if (webjar.cache.enabled) {
                 setupCaching(project, webjar, task)

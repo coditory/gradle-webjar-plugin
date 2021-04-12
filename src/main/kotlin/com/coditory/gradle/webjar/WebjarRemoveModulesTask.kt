@@ -5,7 +5,7 @@ import com.coditory.gradle.webjar.WebjarPlugin.Companion.WEBJAR_TASK_GROUP
 import com.coditory.gradle.webjar.shared.VersionFiles.UNDEFINED_VERSION
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
 import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
-import com.moowork.gradle.node.NodeExtension
+import com.github.gradle.node.NodeExtension
 import org.gradle.api.Project
 import org.gradle.api.logging.Logger
 
@@ -19,8 +19,8 @@ internal object WebjarRemoveModulesTask {
 
     private fun removeStaleNpmModules(project: Project, logger: Logger) {
         val node = project.extensions.findByType(NodeExtension::class.java)
-        val nodeVersion = normalizeVersion(node?.version)
-        val npmVersion = normalizeVersion(node?.npmVersion)
+        val nodeVersion = normalizeVersion(node?.version?.orNull)
+        val npmVersion = normalizeVersion(node?.npmVersion?.orNull)
         val lastNodeVersion = nodeVersionFile(project).read()
         val lastNpmVersion = npmVersionFile(project).read()
         val versionChanged = (lastNodeVersion != nodeVersion || lastNpmVersion != npmVersion)
