@@ -4,10 +4,10 @@ plugins {
     kotlin("jvm") version "1.4.31"
     id("jacoco")
     id("com.github.kt3k.coveralls") version "2.12.0"
-    id("com.gradle.plugin-publish") version "0.14.0"
+    id("com.gradle.plugin-publish") version "0.15.0"
     id("java-gradle-plugin")
     id("maven-publish")
-    id("org.jlleitschuh.gradle.ktlint") version "10.0.0"
+    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
 }
 
 repositories {
@@ -20,13 +20,12 @@ ktlint {
 }
 
 dependencies {
-    implementation(gradleApi())
-    implementation("com.github.node-gradle:gradle-node-plugin:3.0.1")
+    implementation("com.github.node-gradle:gradle-node-plugin:3.1.0")
 
-    testImplementation("org.assertj:assertj-core:3.19.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.1")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    testImplementation("org.assertj:assertj-core:3.20.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.2")
 }
 
 group = "com.coditory.gradle"
@@ -48,8 +47,8 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.jacocoTestReport {
     reports {
-        xml.isEnabled = true
-        html.isEnabled = true
+        xml.required.set(true)
+        html.required.set(true)
     }
 }
 

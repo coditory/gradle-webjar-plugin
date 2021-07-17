@@ -74,7 +74,7 @@ class BuildProjectTest {
         .build()
 
     @ParameterizedTest(name = "should clean build webjar for gradle version: {0}")
-    @ValueSource(strings = ["current", "6.0"])
+    @ValueSource(strings = ["current", "7.1"])
     fun `should clean build webjar`(gradleVersion: String?) {
         val result = runGradle(project, listOf("clean", "build"), gradleVersion)
         assertThat(result.task(":clean")?.outcome).isEqualTo(UP_TO_DATE)
@@ -113,7 +113,7 @@ class BuildProjectTest {
     }
 
     private fun expectNodeAndNpmVersionFiles() {
-        assertThat(project.readFile("node_modules/.nodeVersion")).isEqualTo("15.14.0")
-        assertThat(project.readFile("node_modules/.npmVersion")).isEqualTo("7.7.6")
+        assertThat(project.readFile("node_modules/.nodeVersion")).isEqualTo("16.5.0")
+        assertThat(project.readFile("node_modules/.npmVersion")).isEqualTo("7.19.1")
     }
 }

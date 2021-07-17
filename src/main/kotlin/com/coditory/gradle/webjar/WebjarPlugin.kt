@@ -5,7 +5,7 @@ import com.github.gradle.node.NodePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlugin
-import org.gradle.api.plugins.JavaPluginConvention
+import org.gradle.api.plugins.JavaPluginExtension
 import org.gradle.api.tasks.SourceSet
 
 open class WebjarPlugin : Plugin<Project> {
@@ -20,7 +20,7 @@ open class WebjarPlugin : Plugin<Project> {
 
     private fun setupNodePlugin(project: Project, webjar: WebjarExtension) {
         project
-            .convention.getPlugin(JavaPluginConvention::class.java)
+            .extensions.getByType(JavaPluginExtension::class.java)
             .sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME)
             .resources.srcDir(project.buildDir.resolve(webjar.outputDir))
         project.plugins.apply(NodePlugin::class.java)
@@ -29,8 +29,8 @@ open class WebjarPlugin : Plugin<Project> {
             it.npmWorkDir.set(project.projectDir.resolve(".node/npm"))
             it.yarnWorkDir.set(project.projectDir.resolve(".node/yarn"))
             it.download.set(true)
-            it.version.set("15.14.0")
-            it.npmVersion.set("7.7.6")
+            it.version.set("16.5.0")
+            it.npmVersion.set("7.19.1")
         }
     }
 

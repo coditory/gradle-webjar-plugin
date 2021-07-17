@@ -4,11 +4,14 @@
 [![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v1.1.0-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
 [![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This plugin connects JVM and Node based projects.
-It maps typical java to npm tasks (build, test, clean, etc).
+Plugin that makes it easy to create SPA applications with Java back end. It connects JVM and Node.js based projects.
+
+It maps typical java tasks to npm tasks (build, test, clean, etc).
 The build result is packed into a jar file, so it can be imported as a dependency by a java project.
 
-This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library). See [sample usage](https://github.com/coditory/gradle-webjar-plugin-sample).
+- This plugin builds frontend submodules. It can be also used to build a [webjar libraries](#building-webjar-library).
+  See [sample usage](https://github.com/coditory/gradle-webjar-plugin-sample).
+- Tested with gradle version >= 7.1
 
 ## Enabling the plugin
 
@@ -92,9 +95,9 @@ You can configure Node and NPM with:
 ```gradle
 node {
   // Version of node to use.
-  version = '15.14.0'
+  version = '16.5.0'
   // Version of npm to use.
-  npmVersion = '7.7.6'
+  npmVersion = '7.19.1'
   // Base URL for fetching node distributions (change if you have a mirror).
   // Or set to null if you want to add the repository on your own.
   distBaseUrl = 'https://nodejs.org/dist'
