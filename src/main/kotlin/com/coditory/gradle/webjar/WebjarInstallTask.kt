@@ -9,27 +9,40 @@ import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.github.gradle.node.NodeExtension
 import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
+import org.gradle.api.tasks.TaskAction
 
-internal object WebjarInstallTask {
-    fun install(project: Project) {
-        project.tasks.register(WEBJAR_INSTALL_TASK, NpmTask::class.java) { task ->
-            task.dependsOn(WEBJAR_INIT_TASK)
-            task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
-            task.group = WEBJAR_TASK_GROUP
-            setupCaching(task)
-            task.args.set(listOf("install"))
-            task.doLast { writeVersionFiles(project) }
-        }
+internal abstract class WebjarInstallTask : NpmTask() {
+    init {
+        group = WEBJAR_TASK_GROUP
+        args.set(listOf("install"))
+        setupCache()
     }
 
-    private fun setupCaching(task: NpmTask) {
-        task.inputs.files("package.json", "package-lock.json")
-        task.outputs.dir("node_modules")
+    private fun setupCache() {
+        inputs.files("package.json", "package-lock.json")
+        outputs.dir("node_modules")
+    }
+
+    @TaskAction
+    fun run() {
+        exec()
+        writeVersionFiles(project)
     }
 
     private fun writeVersionFiles(project: Project) {
         val node = project.extensions.findByType(NodeExtension::class.java)
         nodeVersionFile(project).write(node?.version?.orNull)
         npmVersionFile(project).write(node?.npmVersion?.orNull)
+    }
+
+    companion object {
+        fun install(project: Project) {
+            project.tasks
+                .register(WEBJAR_INSTALL_TASK, WebjarInstallTask::class.java)
+                .configure {
+                    it.dependsOn(WEBJAR_INIT_TASK)
+                    it.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
+                }
+        }
     }
 }

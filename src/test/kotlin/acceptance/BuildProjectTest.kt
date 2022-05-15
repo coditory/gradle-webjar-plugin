@@ -108,8 +108,8 @@ class BuildProjectTest {
     }
 
     private fun expectLintAndTestTimestampFiles() {
-        assertThat(project.readBuildFile("test/timestamp")).isNotBlank()
-        assertThat(project.readBuildFile("lint/timestamp")).isNotBlank()
+        assertThat(project.readBuildFile("test/timestamp")).isNotBlank
+        assertThat(project.readBuildFile("lint/timestamp")).isNotBlank
     }
 
     private fun expectNodeAndNpmVersionFiles() {

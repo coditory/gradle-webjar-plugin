@@ -7,18 +7,25 @@ import com.coditory.gradle.webjar.WebjarSkipCondition.isWebjarSkipped
 import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 import org.gradle.language.base.plugins.LifecycleBasePlugin.CLEAN_TASK_NAME
+import javax.inject.Inject
 
-internal object WebjarCleanTask {
-    @Suppress("UnstableApiUsage")
-    fun install(project: Project, webjar: WebjarExtension) {
-        val cleanTask = project.tasks.register(WEBJAR_CLEAN_TASK, NpmTask::class.java) { task ->
-            task.dependsOn(WEBJAR_INSTALL_TASK)
-            task.group = WEBJAR_TASK_GROUP
-            task.args.set(listOf("run", webjar.taskNames.clean))
-        }
-        if (!isWebjarSkipped(project)) {
-            project.tasks.named(CLEAN_TASK_NAME).configure {
-                it.dependsOn(cleanTask)
+internal abstract class WebjarCleanTask @Inject constructor(
+    webjar: WebjarExtension
+) : NpmTask() {
+
+    init {
+        group = WEBJAR_TASK_GROUP
+        args.set(listOf("run", webjar.taskNames.clean))
+    }
+
+    companion object {
+        fun install(project: Project, webjar: WebjarExtension) {
+            val taskProvider = project.tasks.register(WEBJAR_CLEAN_TASK, WebjarCleanTask::class.java, webjar)
+            taskProvider.configure { it.dependsOn(WEBJAR_INSTALL_TASK) }
+            if (!isWebjarSkipped(project)) {
+                project.tasks.named(CLEAN_TASK_NAME).configure {
+                    it.dependsOn(taskProvider)
+                }
             }
         }
     }

@@ -8,21 +8,13 @@ import com.github.gradle.node.npm.task.NpmSetupTask
 import com.github.gradle.node.npm.task.NpmTask
 import org.gradle.api.Project
 
-object WebjarInitTask {
-    fun install(project: Project) {
-        project.tasks.register(WEBJAR_INIT_TASK, NpmTask::class.java) { task ->
-            task.dependsOn(NpmSetupTask.NAME)
-            task.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
-            task.group = WebjarPlugin.WEBJAR_TASK_GROUP
-            task.args.set(resolveNpmArguments(project))
-            task.doFirst { ensurePackageJson(project) }
-            setupCaching(task)
-        }
-    }
-
-    private fun setupCaching(task: NpmTask) {
-        task.inputs.files("package.json")
-        task.outputs.file("package-lock.json")
+internal abstract class WebjarInitTask : NpmTask() {
+    init {
+        group = WebjarPlugin.WEBJAR_TASK_GROUP
+        inputs.files("package.json")
+        outputs.file("package-lock.json")
+        ensurePackageJson(project)
+        args.set(resolveNpmArguments(project))
     }
 
     private fun resolveNpmArguments(project: Project): List<String> {
@@ -53,6 +45,17 @@ object WebjarInitTask {
                 }
                 """.trimIndent()
             )
+        }
+    }
+
+    companion object {
+        fun install(project: Project) {
+            project.tasks
+                .register(WEBJAR_INIT_TASK, WebjarInitTask::class.java)
+                .configure {
+                    it.dependsOn(NpmSetupTask.NAME)
+                    it.dependsOn(WEBJAR_REMOVE_MODULES_TASK)
+                }
         }
     }
 }

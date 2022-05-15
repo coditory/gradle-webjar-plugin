@@ -6,18 +6,17 @@ import com.coditory.gradle.webjar.shared.VersionFiles.UNDEFINED_VERSION
 import com.coditory.gradle.webjar.shared.VersionFiles.nodeVersionFile
 import com.coditory.gradle.webjar.shared.VersionFiles.npmVersionFile
 import com.github.gradle.node.NodeExtension
+import org.gradle.api.DefaultTask
 import org.gradle.api.Project
-import org.gradle.api.logging.Logger
+import org.gradle.api.tasks.TaskAction
 
-internal object WebjarRemoveModulesTask {
-    fun install(project: Project) {
-        project.tasks.register(WEBJAR_REMOVE_MODULES_TASK) {
-            it.group = WEBJAR_TASK_GROUP
-            removeStaleNpmModules(it.project, it.logger)
-        }
+internal abstract class WebjarRemoveModulesTask : DefaultTask() {
+    init {
+        group = WEBJAR_TASK_GROUP
     }
 
-    private fun removeStaleNpmModules(project: Project, logger: Logger) {
+    @TaskAction
+    fun removeStaleNpmModules() {
         val node = project.extensions.findByType(NodeExtension::class.java)
         val nodeVersion = normalizeVersion(node?.version?.orNull)
         val npmVersion = normalizeVersion(node?.npmVersion?.orNull)
@@ -44,5 +43,11 @@ internal object WebjarRemoveModulesTask {
         val nodeModulesDir = project.projectDir.resolve("node_modules")
         nodeModulesDir.deleteRecursively()
         nodeModulesDir.mkdirs()
+    }
+
+    companion object {
+        fun install(project: Project) {
+            project.tasks.register(WEBJAR_REMOVE_MODULES_TASK, WebjarRemoveModulesTask::class.java)
+        }
     }
 }
