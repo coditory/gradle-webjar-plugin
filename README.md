@@ -1,5 +1,5 @@
 # Webjar Gradle Plugin
-[![Build Status](https://github.com/coditory/gradle-webjar-plugin/workflows/Build/badge.svg?branch=master)](https://github.com/coditory/gradle-webjar-plugin/actions?query=workflow%3ABuild+branch%3Amaster)
+[![Build](https://github.com/coditory/gradle-webjar-plugin/actions/workflows/build.yml/badge.svg)](https://github.com/coditory/gradle-webjar-plugin/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/coditory/gradle-webjar-plugin/badge.svg?branch=master)](https://coveralls.io/github/coditory/gradle-webjar-plugin?branch=master)
 [![Gradle Plugin Portal](https://img.shields.io/badge/Plugin_Portal-v1.3.0-green.svg)](https://plugins.gradle.org/plugin/com.coditory.webjar)
 [![Join the chat at https://gitter.im/coditory/gradle-webjar-plugin](https://badges.gitter.im/coditory/gradle-webjar-plugin.svg)](https://gitter.im/coditory/gradle-webjar-plugin?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
